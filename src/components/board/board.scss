@@ -1,0 +1,6 @@
+.board {
+	display: inline-grid;
+
+	grid-template-columns: repeat(18, minmax(30px, 1fr));
+	grid-template-rows: repeat(18, minmax(30px, 1fr));
+}

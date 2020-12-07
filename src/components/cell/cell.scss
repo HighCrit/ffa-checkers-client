@@ -1,0 +1,17 @@
+.board-cell {
+	&.white {
+		background-color: white;
+	}
+
+	&.black {
+		background-color: black;
+
+		&.droppable {
+			background-color: yellow;
+		}
+
+		&.hovering {
+			background-color: lime;
+		}
+	}
+}

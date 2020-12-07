@@ -1,0 +1,23 @@
+{
+    "extends": "stylelint-config-idiomatic-order",
+    "plugins": [
+        "stylelint-scss",
+        "stylelint-order"
+    ],
+    "rules": {
+        "scss/selector-no-redundant-nesting-selector": true,
+        "declaration-colon-space-after": "always-single-line",
+        "color-hex-case": [
+            "upper"
+        ],
+        "color-no-invalid-hex": true,
+        "indentation": "tab",
+        "rule-empty-line-before": [
+            "always",
+            {
+                "ignore": ["after-comment", "first-nested"]
+            }
+        ],
+        "block-opening-brace-space-before": "always"
+    }
+}
