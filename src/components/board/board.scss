@@ -1,6 +1,21 @@
+@import '../../colors.scss';
+
+.board-container {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	width: fit-content;
+	margin: 10px;
+	background-color: $darkShade;
+	border-radius: 5px;
+}
+
 .board {
 	display: inline-grid;
+	width: 98%;
+	height: 98%;
 
-	grid-template-columns: repeat(18, minmax(30px, 1fr));
-	grid-template-rows: repeat(18, minmax(30px, 1fr));
+	grid-template-columns: repeat(18, 1fr);
+	grid-template-rows: repeat(18, 1fr);
 }

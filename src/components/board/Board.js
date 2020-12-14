@@ -49,11 +49,13 @@ class Board extends Component {
         }
         
         return (
-            <DndProvider options={HTML5toTouch}>
-                <div style={{ width: this.state.size, height: this.state.size }} className={'board'}>
-                    {cells}
-                </div>
-            </DndProvider>
+            <div className={'board-container'} style={{ width: this.state.size, height: this.state.size }}>
+                <DndProvider options={HTML5toTouch}>
+                    <div className={'board'}>
+                        {cells}
+                    </div>
+                </DndProvider>
+            </div>
         );
     }
 }

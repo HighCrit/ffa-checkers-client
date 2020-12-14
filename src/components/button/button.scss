@@ -1,0 +1,21 @@
+@import '../../colors.scss';
+
+.button-component {
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 10px 15px;
+	margin: 10px;
+	background-color: $main;
+	border-radius: 7px;
+	box-shadow: 2px 2px 5px $darkShade;
+	color: $lightShade;
+
+	font-weight: 500;
+}
+
+.button-component:hover {
+	background: $darkAccent;
+	cursor: pointer;
+}

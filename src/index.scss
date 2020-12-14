@@ -6,7 +6,7 @@
 }
 
 body {
-	background-color: $lightShade;
+	background-color: $lightAccent;
 	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
 		'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
 		sans-serif;
@@ -17,4 +17,19 @@ body {
 code {
 	font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
 		monospace;
+}
+
+.page {
+	display: flex;
+	height: 1px;
+	// -8vh because of header
+	min-height: calc(100vh - 8vh);
+}
+
+a {
+	color: $darkAccent;
+}
+
+a:hover {
+	color: $darkShade;
 }
