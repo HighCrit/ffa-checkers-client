@@ -2,30 +2,18 @@ import React from 'react';
 import { DropTarget } from 'react-dnd';
 import DragType from '../../enums/DragType';
 import Game from '../../game/Game';
-import Move from '../../game/objects/Move';
 import Piece from '../piece/Piece';
 import PlayerPiece from '../piece/PlayerPiece';
 import Cell from './Cell';
 
-class BlackCell extends Cell {  
-    constructor(props) {
-        super(props);
-        this.state = {
-            piece: null
-        };
-    }
-
-    update() {
-        this.setState({ piece: Game.getPiece(this.props.index) });
-    }
-
+class BlackCell extends Cell {
     render() {
         let piece = null;
-        if (this.state.piece !== null) {
-            if (this.state.piece.playerColor === Game.playerColor) {
-                piece = <PlayerPiece {...this.state.piece}/>;
+        if (this.props.playerColor) {
+            if (this.props.playerColor === Game.playerColor) {
+                piece = <PlayerPiece playerColor={this.props.playerColor} position={this.props.position} isKing={this.props.isKing}/>;
             } else {
-                piece = <Piece {...this.state.piece}/>;
+                piece = <Piece playerColor={this.props.playerColor} position={this.props.position} isKing={this.props.isKing}/>;
             }
         }
         const { isOver, canDrop, connectDropTarget } = this.props;
@@ -41,7 +29,7 @@ class BlackCell extends Cell {
  
 export default DropTarget(DragType.PIECE, { 
     drop: (props, monitor) => {
-        Game.executeMove(new Move(monitor.getItem().position, props.index));
+        Game.sendMove(monitor.getItem().position, props.index);
     },
     canDrop: (props, monitor) => Game.canMove(monitor.getItem().position, props.index)
 }, (connect, monitor) => {

@@ -1,7 +1,7 @@
 class Move {
-    constructor(oldPosition, newPosition, takes = null) {
-        this.oldPosition = oldPosition;
-        this.newPosition = newPosition;
+    constructor(start, end, takes = null) {
+        this.start = start;
+        this.end = end;
         this.takes = takes;
     }
 }

@@ -1,4 +1,5 @@
 import io from 'socket.io-client';
+import game from './game/Game';
 import history from './history';
 
 class Socket {
@@ -38,7 +39,7 @@ class Socket {
                 return;
             }
             sessionStorage.setItem('lobbyCode', data.code);
-            history.push('/game/live/' + data.code);
+            history.push({ pathname: '/game/' + data.code, state: { connected: true } });
         });
 
         this.on('lobby-join-result', (data) => {
@@ -46,8 +47,33 @@ class Socket {
                 alert('An error occurred - ' + data.message);
                 return;
             }
+            game.reset();
             sessionStorage.setItem('lobbyCode', data.code);
-            history.push('/game/live/' + data.code);
+            history.push({ pathname: '/game/' + data.code, state: { connected: true } });
+        });
+
+        this.on('lobby-reconnect', (data) => {
+            if (!data.success) {
+                alert('An error occured - ' + data.message);
+                return;
+            }
+            sessionStorage.setItem('lobbyCode', data.code);
+            history.push({ pathname: '/game/' + data.code, state: { connected: true } });
+        });
+
+        this.on('lobby-add-ai-result', (data) => {
+            if (!data.success) {
+                alert(data.message);
+                return;
+            }
+        });
+
+        this.on('lobby-player-joined', (data) => {
+            game.setPlayers(data.players);
+        });
+
+        this.on('lobby-player-left', (data) => {
+            game.setPlayers(data.players);
         });
     }
 
@@ -58,6 +84,9 @@ class Socket {
         this.socket.off('lobby-join-result');
         this.socket.off('lobby-create-result');
         this.socket.off('lobby-reconnect');
+        this.socket.off('lobby-player-joined');
+        this.socket.off('lobby-player-left');
+        this.socket.off('lobby-add-ai-result');
     }
 
     clearUuid() {
@@ -93,6 +122,10 @@ class Socket {
     createSession() {
         this.init();
         this.socket.emit('lobby-create-action');
+    }
+
+    addAi() {
+        this.socket.emit('lobby-add-ai-action');
     }
 
     joinSession(code) {

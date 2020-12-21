@@ -1,0 +1,35 @@
+.game {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.lobby-info {
+    .player-container {
+        .player {
+
+            &.YELLOW {
+                h1 {
+                    color: yellow;
+                }
+            }
+
+            &.GREEN {
+                h1 {
+                    color: limegreen;
+                }
+            }
+
+            &.BLUE {
+                h1 {
+                    color: blue;
+                }
+            }
+
+            &.RED {
+                h1 {
+                    color: red;
+                }
+            }
+        }
+    }
+}

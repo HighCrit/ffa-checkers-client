@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import Board from '../../../components/board/Board';
+import Button from '../../../components/button/Button';
 import GameState from '../../../enums/GameState';
+import { PlayerColor } from '../../../enums/PlayerColor';
 import game from '../../../game/Game';
 import socket from '../../../socketApi';
 import './live_game.scss';
@@ -10,15 +12,19 @@ class LiveGame extends Component {
         super(props);
 
         this.state = {
-            gameState: GameState.WAITING
+            gameState: GameState.WAITING,
+            players: {}
         };
-        
-        game.setGame(this);
     }
 
     componentDidMount() {
-        socket.init();
+        game.setGame(this);
         game.registerListeners();
+    }
+
+    componentWillUnmount() {
+        game.unregisterListeners();
+        game.reset();
     }
 
     render() {
@@ -33,8 +39,18 @@ class LiveGame extends Component {
             default:
                 return (
                     <div className='page game'>
-                        <div className=''>
-
+                        <div className='lobby-info'>
+                            <div className='player-container'>
+                                {
+                                    Object.keys(PlayerColor).map((color) => (
+                                        <div key={color} className={`player ${color}`}>
+                                            <h1>{color}</h1>
+                                            <span>{this.state.players[color] || 'Waiting...'}</span>
+                                        </div>
+                                    ))
+                                }
+                                <Button text='Add AI' onClick={() => socket.addAi()}/>
+                            </div>
                         </div>
                     </div>
                 );

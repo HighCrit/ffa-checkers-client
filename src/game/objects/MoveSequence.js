@@ -1,3 +1,10 @@
+const moveSequenceToString = function() {
+    if (this.sequence.length > 0) {
+        return this.sequence[0].start + 'x' + this.sequence.map(m => m.end).join('x');
+    }
+    return '';
+};
+
 class MoveSequence {
     constructor(sequence = []) {
         this.sequence = sequence;
@@ -15,11 +22,8 @@ class MoveSequence {
     }
 
     toString() {
-        if (this.sequence.length > 0) {
-            return this.sequence[0].oldPosition + 'x' + this.sequence.map(m => m.newPosition).join('x');
-        }
-        return '';
+        return moveSequenceToString.apply(this);
     }
 }
 
-export default MoveSequence;
+export { MoveSequence, moveSequenceToString };
