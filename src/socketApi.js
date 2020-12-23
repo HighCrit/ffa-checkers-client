@@ -1,3 +1,4 @@
+import { toast } from 'react-toastify';
 import io from 'socket.io-client';
 import game from './game/Game';
 import history from './history';
@@ -35,7 +36,7 @@ class Socket {
 
         this.on('lobby-create-result', (data) => {
             if (!data.success) {
-                alert('An error occured - ', data.message);
+                toast.error(data.message);
                 return;
             }
             sessionStorage.setItem('lobbyCode', data.code);
@@ -44,7 +45,7 @@ class Socket {
 
         this.on('lobby-join-result', (data) => {
             if (!data.success) {
-                alert('An error occurred - ' + data.message);
+                toast.error(data.message);
                 return;
             }
             game.reset();
@@ -54,7 +55,7 @@ class Socket {
 
         this.on('lobby-reconnect', (data) => {
             if (!data.success) {
-                alert('An error occured - ' + data.message);
+                toast.error(data.message);
                 return;
             }
             sessionStorage.setItem('lobbyCode', data.code);
@@ -63,7 +64,7 @@ class Socket {
 
         this.on('lobby-add-ai-result', (data) => {
             if (!data.success) {
-                alert(data.message);
+                toast.error(data.message);
                 return;
             }
         });
@@ -75,6 +76,8 @@ class Socket {
         this.on('lobby-player-left', (data) => {
             game.setPlayers(data.players);
         });
+
+        this.socket.emit('uuid', { id: this.uuid });
     }
 
     clearServerEvents() {

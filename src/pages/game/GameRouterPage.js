@@ -18,7 +18,7 @@ class GameRouterPage extends Component {
             this.setState({ loading: false, replay: false });
 
             socket.init();
-            if (this.props.location.state && !this.props.location.state.connected) {
+            if (!this.props.location.state || !this.props.location.state.connected) {
                 socket.joinSession(this.props.match.params.code);
             }
         }

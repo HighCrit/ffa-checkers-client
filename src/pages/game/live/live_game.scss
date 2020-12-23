@@ -3,33 +3,18 @@
     justify-content: space-evenly;
 }
 
-.lobby-info {
-    .player-container {
-        .player {
+.YELLOW {
+    color: yellow;
+}
 
-            &.YELLOW {
-                h1 {
-                    color: yellow;
-                }
-            }
+.GREEN {
+    color: limegreen;
+}
 
-            &.GREEN {
-                h1 {
-                    color: limegreen;
-                }
-            }
+.BLUE {
+    color: blue;
+}
 
-            &.BLUE {
-                h1 {
-                    color: blue;
-                }
-            }
-
-            &.RED {
-                h1 {
-                    color: red;
-                }
-            }
-        }
-    }
+.RED {
+    color: red;
 }

@@ -10,10 +10,11 @@ class BlackCell extends Cell {
     render() {
         let piece = null;
         if (this.props.playerColor) {
+            const { playerColor, position, isKing } = this.props;
             if (this.props.playerColor === Game.playerColor) {
-                piece = <PlayerPiece playerColor={this.props.playerColor} position={this.props.position} isKing={this.props.isKing}/>;
+                piece = <PlayerPiece {...{ playerColor, position, isKing }}/>;
             } else {
-                piece = <Piece playerColor={this.props.playerColor} position={this.props.position} isKing={this.props.isKing}/>;
+                piece = <Piece {...{ playerColor, position, isKing }}/>;
             }
         }
         const { isOver, canDrop, connectDropTarget } = this.props;

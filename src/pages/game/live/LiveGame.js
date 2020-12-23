@@ -13,7 +13,9 @@ class LiveGame extends Component {
 
         this.state = {
             gameState: GameState.WAITING,
-            players: {}
+            players: {},
+            currentPlayer: null,
+            winner: null
         };
     }
 
@@ -33,6 +35,30 @@ class LiveGame extends Component {
                 return (
                     <div className='page game'>
                         <Board/>
+                    </div>
+                );
+            case GameState.PAUSED:
+                return (
+                    <div className='page game'>
+                        <div className='lobby-info'>
+                            <h1>Game Paused</h1>
+                            <div className='player-container'>
+                                {
+                                    Object.keys(PlayerColor).map((color) => (
+                                        <div key={color} className={`player ${color}`}>
+                                            <h1>{color}</h1>
+                                            <span>{this.state.players[color] || 'Waiting...'}</span>
+                                        </div>
+                                    ))
+                                }
+                            </div>
+                        </div>
+                    </div>
+                );
+            case GameState.ENDED:
+                return (
+                    <div className='page game'>
+                        
                     </div>
                 );
             case GameState.WAITING:

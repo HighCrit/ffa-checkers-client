@@ -4,20 +4,11 @@ import GameState from '../enums/GameState';
 import socket from '../socketApi';
 import Move from '../game/objects/Move';
 import { FenToPlayerColor } from '../enums/PlayerColor';
+import { toast } from 'react-toastify';
 
 class Game {
     constructor() {
-        this.board = null;
-        this.game = null;
-
-        this.players = {};
-        this.playerColor = null;
-        this.currentPlayer = null;
-        this.pieces = new Array(162);
-        this.gameState = GameState.WAITING;
-
-        this.moveSet = [];
-        this.moveSequence = new MoveSequence();
+        this.reset();
     }
 
     reset() {
@@ -27,6 +18,7 @@ class Game {
         this.players = {};
         this.playerColor = null;
         this.currentPlayer = null;
+        this.winner = null;
         this.pieces = new Array(162);
         this.gameState = GameState.WAITING;
 
@@ -54,6 +46,12 @@ class Game {
 
         socket.socket.on('game-current-player', (data) => {
             this.currentPlayer = data;
+            if (this.game) {
+                if (this.currentPlayer === this.playerColor) {
+                    toast('It\'s your turn', { autoClose: 3000 });
+                }
+                this.game.setState({ currentPlayer: this.currentPlayer });
+            }
         });
 
         socket.socket.on('game-move-set', (data) => {
@@ -71,6 +69,25 @@ class Game {
             this.playerColor = data;
         });
 
+        socket.socket.on('game-won-by', (data) => {
+            this.winner = data;
+            if (this.game) {
+                this.game.setState({ winner: this.winner });
+            }
+        });
+
+        socket.socket.on('game-piece-promotion', (data) => {
+            const piece = this.pieces[data];
+            this.pieces[data] = null;
+            if (this.board) {
+                this.board.setState({ pieces: this.pieces });
+            }
+            this.pieces[data] = new Piece(piece.playerColor, piece.position, true);
+            if (this.board) {
+                this.board.setState({ pieces: this.pieces });
+            }
+        });
+
         // Let the server know we're done loading
         socket.socket.emit('game-loaded');
     }
@@ -81,6 +98,9 @@ class Game {
         socket.socket.off('game-board');
         socket.socket.off('game-current-player');
         socket.socket.off('game-move-set');
+        socket.socket.off('game-move-result');
+        socket.socket.off('game-won-by');
+        socket.socket.off('game-piece-promotion');
     }
 
     setPlayers(players) {
@@ -96,15 +116,15 @@ class Game {
 
     setBoard(board) {
         this.board = board;
-        if (board) {
-            board.setState({ pieces: this.pieces });
+        if (this.board) {
+            this.board.setState({ pieces: this.pieces });
         }
     }
 
     setGame(game) {
         this.game = game;
-        if (game !== null) {
-            this.game.setState({ players: this.players, gameState: this.gameState });
+        if (this.game) {
+            this.game.setState({ currentPlayer: this.currentPlayer, players: this.players, gameState: this.gameState, winner: this.winner });
         }
     }
 
@@ -169,7 +189,6 @@ class Game {
     }
 
     executeMove(move) {
-        console.warn(move);
         const piece = this.pieces[move.start];
         piece.position = move.end;
         this.pieces[move.start] = null;
