@@ -10,7 +10,6 @@ import './board.scss';
 class Board extends Component {
     constructor(props) {
         super(props);
-        // this.blackCellRefs = new Array(162);
         this.state = {
             size: '800px',
             pieces: []

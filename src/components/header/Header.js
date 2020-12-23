@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router';
+import socket from '../../socketApi';
 import './header.scss';
 
 class Header extends Component {
@@ -10,6 +11,7 @@ class Header extends Component {
     }
 
     goToHome() {
+        socket.leaveSession();
         this.props.history.push('/');
     }
 

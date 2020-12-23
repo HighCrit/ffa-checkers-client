@@ -14,8 +14,10 @@ class LiveGame extends Component {
         this.state = {
             gameState: GameState.WAITING,
             players: {},
+            playerColor: null,
             currentPlayer: null,
-            winner: null
+            winner: null,
+            refresh: true
         };
     }
 
@@ -47,7 +49,7 @@ class LiveGame extends Component {
                                     Object.keys(PlayerColor).map((color) => (
                                         <div key={color} className={`player ${color}`}>
                                             <h1>{color}</h1>
-                                            <span>{this.state.players[color] || 'Waiting...'}</span>
+                                            <span>{color === this.state.playerColor ? 'You' : this.state.players[color] || <span className='BLACK'>Waiting...</span>}</span>
                                         </div>
                                     ))
                                 }
@@ -71,7 +73,7 @@ class LiveGame extends Component {
                                     Object.keys(PlayerColor).map((color) => (
                                         <div key={color} className={`player ${color}`}>
                                             <h1>{color}</h1>
-                                            <span>{this.state.players[color] || 'Waiting...'}</span>
+                                            <span>{color === this.state.playerColor ? 'You' : this.state.players[color] || <span className='BLACK'>Waiting...</span>}</span>
                                         </div>
                                     ))
                                 }

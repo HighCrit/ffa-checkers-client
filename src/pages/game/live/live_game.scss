@@ -1,3 +1,5 @@
+@import '../../../colors.scss';
+
 .game {
     display: flex;
     justify-content: space-evenly;
@@ -17,4 +19,8 @@
 
 .RED {
     color: red;
+}
+
+.BLACK {
+    color: black;
 }

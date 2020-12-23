@@ -123,7 +123,6 @@ class Socket {
 
     /* Misc Funcs */
     createSession() {
-        this.init();
         this.socket.emit('lobby-create-action');
     }
 
@@ -132,8 +131,11 @@ class Socket {
     }
 
     joinSession(code) {
-        this.init();
         this.socket.emit('lobby-join-action', { code });
+    }
+
+    leaveSession() {
+        this.socket.emit('lobby-leave-action');
     }
 }
 

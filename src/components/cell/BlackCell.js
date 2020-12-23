@@ -7,14 +7,28 @@ import PlayerPiece from '../piece/PlayerPiece';
 import Cell from './Cell';
 
 class BlackCell extends Cell {
+    constructor(props) {
+        super(props);
+        const { playerColor, position, isKing } = this.props;
+        this.state = {
+            playerColor, position, isKing
+        };
+    }
+
+    componentDidUpdate(prevProps) {
+        const { playerColor, position, isKing } = this.props;
+        if (playerColor !== prevProps.playerColor || position !== prevProps.position || isKing !== prevProps.isKing) {
+            this.setState({ playerColor, position, isKing });
+        }
+    }
+
     render() {
         let piece = null;
         if (this.props.playerColor) {
-            const { playerColor, position, isKing } = this.props;
             if (this.props.playerColor === Game.playerColor) {
-                piece = <PlayerPiece {...{ playerColor, position, isKing }}/>;
+                piece = <PlayerPiece {...this.state}/>;
             } else {
-                piece = <Piece {...{ playerColor, position, isKing }}/>;
+                piece = <Piece {...this.state}/>;
             }
         }
         const { isOver, canDrop, connectDropTarget } = this.props;

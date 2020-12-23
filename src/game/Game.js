@@ -38,6 +38,9 @@ class Game {
 
         socket.socket.on('game-your-color', (data) => {
             this.playerColor = data;
+            if (this.game) {
+                this.game.setState({ playerColor: this.playerColor });
+            }
         });
 
         socket.socket.on('game-board', (data) => {
@@ -77,12 +80,8 @@ class Game {
         });
 
         socket.socket.on('game-piece-promotion', (data) => {
-            const piece = this.pieces[data];
-            this.pieces[data] = null;
-            if (this.board) {
-                this.board.setState({ pieces: this.pieces });
-            }
-            this.pieces[data] = new Piece(piece.playerColor, piece.position, true);
+            this.pieces[data].isKing = true;
+        
             if (this.board) {
                 this.board.setState({ pieces: this.pieces });
             }
@@ -93,6 +92,9 @@ class Game {
     }
 
     unregisterListeners() {
+        if (!socket.socket) { 
+            return;
+        }
         socket.socket.off('game-state');
         socket.socket.off('game-your-color');
         socket.socket.off('game-board');
@@ -106,7 +108,7 @@ class Game {
     setPlayers(players) {
         this.players = players;
         if (this.game) {
-            this.game.setState({ players });
+            this.game.setState({ players: this.players });
         }
     }
 
@@ -124,7 +126,7 @@ class Game {
     setGame(game) {
         this.game = game;
         if (this.game) {
-            this.game.setState({ currentPlayer: this.currentPlayer, players: this.players, gameState: this.gameState, winner: this.winner });
+            this.game.setState({ currentPlayer: this.currentPlayer, players: this.players, gameState: this.gameState, winner: this.winner, playerColor: this.playerColor });
         }
     }
 
