@@ -17,7 +17,7 @@ class BlackCell extends Cell {
                 piece = <Piece { ...{ playerColor, position, isKing }}/>;
             }
         }
-        const className = 'board-cell black' + (isOver && canDrop ? ' hovering' : '') + (canDrop ? ' droppable' : '');
+        const className = 'board-cell black' + (isOver && canDrop ? ' hovering' : '') + (canDrop ? ' droppable' : '') + (this.props.lastMove ? ' last-move' : '');
 
         return connectDropTarget(
             <div className={className}>

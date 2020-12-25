@@ -2,25 +2,72 @@
 
 .game {
 	display: flex;
-	justify-content: space-evenly;
+	align-items: center;
+	justify-content: center;
+
+	.player-info-container {
+		display: flex;
+		width: 8rem;
+		height: 90%;
+		flex-wrap: wrap;
+	}
 }
 
-.YELLOW {
-	color: yellow;
-}
+.lobby {
+	display: flex;
+	align-items: center;
+	justify-content: center;
 
-.GREEN {
-	color: limegreen;
-}
+	.lobby-info {
+		display: flex;
+		min-width: 30%;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: center;
+		background-color: $darkShade;
+		border-radius: 10px;
 
-.BLUE {
-	color: blue;
-}
+		.player-container {
+			display: flex;
+			width: 90%;
+			flex-direction: column;
+			border-top: 2px solid $lightAccent;
+			border-bottom: 2px solid $lightAccent;
 
-.RED {
-	color: red;
-}
+			margin-top: 1rem;
+			margin-right: 2rem;
+			margin-left: 2rem;
 
-.BLACK {
-	color: black;
+			.player {
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				margin: .2rem;
+			}
+		}
+
+		.button-container {
+			display: flex;
+		}
+	}
+
+	.YELLOW {
+		color: yellow;
+	}
+	
+	.GREEN {
+		color: limegreen;
+	}
+	
+	.BLUE {
+		color: blue;
+	}
+	
+	.RED {
+		color: red;
+	}
+	
+	.BLACK {
+		color: black;
+	}
 }

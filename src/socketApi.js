@@ -1,6 +1,5 @@
 import { toast } from 'react-toastify';
 import io from 'socket.io-client';
-import game from './pages/game/base/Game';
 import history from './history';
 
 class Socket {
@@ -48,7 +47,6 @@ class Socket {
                 toast.error(data.message);
                 return;
             }
-            game.reset();
             sessionStorage.setItem('lobbyCode', data.code);
             history.push({ pathname: '/game/' + data.code, state: { connected: true } });
         });
@@ -115,6 +113,7 @@ class Socket {
 
     /* Misc Funcs */
     createSession() {
+        this.init();
         this.socket.emit('lobby-create-action');
     }
 

@@ -17,6 +17,7 @@ class Game extends Component {
             currentPlayer: null,
             winner: null,
             pieces: [],
+            lastMove: null,
             gameState: GameState.WAITING,
         };
 
@@ -82,7 +83,7 @@ class Game extends Component {
             const pieceStrings = playerInfo.substring(1).split(',');
             pieceStrings.forEach((piece) => {
                 const isKing = piece.charAt(0) === 'K';
-                const p = new Piece(playerColor, parseInt(piece, 10), isKing);
+                const p = new Piece(playerColor, parseInt(isKing ? piece.substring(1) : piece, 10), isKing);
                 pieces[p.position] = p;
             });
         });
@@ -127,17 +128,22 @@ class Game extends Component {
     executeMove(move) {
         const pieces = this.state.pieces.slice();
         const piece = pieces[move.start];
-        piece.position = move.end;
-        pieces[move.start] = null;
-        pieces[move.end] = piece;
 
-        if (move.takes) {
-            pieces[move.takes.position] = null;
-        }
-        
-        this.moveSequence.addMove(move);
-
-        this.setState({ pieces });
+        if (piece) {
+            piece.position = move.end;
+            pieces[move.start] = null;
+            pieces[move.end] = piece;
+    
+            if (move.takes) {
+                pieces[move.takes.position] = null;
+            }
+            
+            this.moveSequence.addMove(move);
+    
+            this.setState({ pieces, lastMove: move });
+        } else {
+            console.error('Detected de-sync on move:', move);
+        } 
     }
 }
 

@@ -16,7 +16,6 @@ class Board extends Component {
 
     render() {
         const cells = [];
-        
         for (let row = 0; row < 18; row++) {
             for (let col = 0; col < 18; col++) {
                 if ((row < 4 || row > 13) && (col < 4 || col > 13)) {
@@ -24,7 +23,7 @@ class Board extends Component {
                 } else if (row % 2 === 0 ? col % 2 === 0 : col % 2 === 1) {
                     const index = Math.floor((row * 18 + col) / 2);
                     const piece = this.props.pieces[index];
-                    cells.push(<BlackCell { ...piece } isMine={piece && (piece.playerColor === this.props.playerColor)} index={index} key={row * 18 + col}/>);
+                    cells.push(<BlackCell lastMove={this.props.lastMove && (this.props.lastMove.start === index || this.props.lastMove.end === index)} { ...piece } isMine={piece && (piece.playerColor === this.props.playerColor)} index={index} key={row * 18 + col}/>);
                 } else {
                     cells.push(<Cell key={row * 18 + col}/>);
                 }      

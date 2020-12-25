@@ -1,0 +1,53 @@
+.player-info {
+	display: flex;
+	overflow: hidden;
+	height: 4rem;
+	flex-grow: 1;
+	border-radius: 10px;
+	color: grey;
+	line-height: 4rem;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+
+	h1 {
+		margin-left: 8px; 
+	}
+
+	&.YELLOW {
+		align-self: flex-end;
+		background-color: yellow;
+
+		&.negative {
+			color: yellow;
+		}
+	}
+
+	&.BLUE {
+		align-self: flex-end;
+		background-color: blue;
+
+		&.negative {
+			color: blue;
+		}
+	}
+
+	&.GREEN {
+		background-color: limegreen;
+
+		&.negative {
+			color: limegreen;
+		}
+	}
+
+	&.RED {
+		background-color: red;
+
+		&.negative {
+			color: red;
+		}
+	}
+
+	&.negative {
+		background-color: grey;
+	}
+}
