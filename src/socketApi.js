@@ -1,6 +1,6 @@
 import { toast } from 'react-toastify';
 import io from 'socket.io-client';
-import game from './game/Game';
+import game from './pages/game/base/Game';
 import history from './history';
 
 class Socket {
@@ -67,14 +67,6 @@ class Socket {
                 toast.error(data.message);
                 return;
             }
-        });
-
-        this.on('lobby-player-joined', (data) => {
-            game.setPlayers(data.players);
-        });
-
-        this.on('lobby-player-left', (data) => {
-            game.setPlayers(data.players);
         });
 
         this.socket.emit('uuid', { id: this.uuid });

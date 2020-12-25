@@ -3,7 +3,6 @@ import { DndProvider } from 'react-dnd-multi-backend';
 import HTML5toTouch from 'react-dnd-multi-backend/dist/esm/HTML5toTouch';
 import BlackCell from '../cell/BlackCell';
 import Cell from '../cell/Cell';
-import Game from '../../game/Game';
 
 import './board.scss';
 
@@ -11,25 +10,21 @@ class Board extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            size: '800px',
-            pieces: []
+            size: '800px'
         };
-    }
-
-    componentDidMount() {
-        Game.setBoard(this);
     }
 
     render() {
         const cells = [];
-
+        
         for (let row = 0; row < 18; row++) {
             for (let col = 0; col < 18; col++) {
                 if ((row < 4 || row > 13) && (col < 4 || col > 13)) {
                     cells.push(<div key={row * 18 + col}/>);
                 } else if (row % 2 === 0 ? col % 2 === 0 : col % 2 === 1) {
                     const index = Math.floor((row * 18 + col) / 2);
-                    cells.push(<BlackCell { ...this.state.pieces[index] } index={index} key={row * 18 + col}/>);
+                    const piece = this.props.pieces[index];
+                    cells.push(<BlackCell { ...piece } isMine={piece && (piece.playerColor === this.props.playerColor)} index={index} key={row * 18 + col}/>);
                 } else {
                     cells.push(<Cell key={row * 18 + col}/>);
                 }      

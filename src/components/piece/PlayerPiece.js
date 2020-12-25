@@ -6,7 +6,7 @@ import DragType from '../../enums/DragType';
 class PlayerPiece extends Piece {
     componentDidMount() {
         const img = document.createElement('img');
-        img.setAttribute('src', this.state.imgUrl);
+        img.setAttribute('src', this.getImgUrl());
         this.props.connectDragPreview(img);
     }
 
@@ -14,7 +14,7 @@ class PlayerPiece extends Piece {
         const { isDragging, connectDragSource } = this.props;
         return connectDragSource(
             <div className={isDragging ? 'piece dragging' : 'piece'}>
-                <img src={this.state.imgUrl}></img>
+                <img src={this.getImgUrl()}></img>
             </div>
         );
     }
