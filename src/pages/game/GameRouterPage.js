@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import socket from '../../socketApi';
 import LiveGame from './live/LiveGame';
+import ReplayGame from './replay/ReplayGame';
 
 class GameRouterPage extends Component {
     constructor(props) {
@@ -14,13 +15,18 @@ class GameRouterPage extends Component {
 
     componentDidMount() {
         if (this.props.match.params.code) {
-            // if game code isn't linked to stored game
-            this.setState({ loading: false, replay: false });
-
-            socket.init();
-            if (!this.props.location.state || !this.props.location.state.connected) {
-                socket.joinSession(this.props.match.params.code);
-            }
+            fetch(process.env.REACT_APP_API_URL + '/replays/' + this.props.match.params.code).then((res) => {
+                if (res.status === 200) {
+                    this.setState({ loading: false, replay: true });
+                } else {
+                    this.setState({ loading: false, replay: false }, () => {
+                        // Setup sockets etc. because this code doesn't go to a replay
+                        if (!this.props.location.state || !this.props.location.state.connected) {
+                            socket.joinSession(this.props.match.params.code);
+                        }
+                    });
+                }
+            }).catch(console.error);
         }
         
     }
@@ -33,11 +39,7 @@ class GameRouterPage extends Component {
                 </div>
             );
         } else if (this.state.replay) {
-            return (
-                <div className='page'>
-                    This feature isn't implemented yet
-                </div>
-            );
+            return <ReplayGame id={this.props.match.params.code}/>;
         } else {
             return <LiveGame/>;
         }

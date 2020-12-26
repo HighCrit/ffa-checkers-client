@@ -7,11 +7,11 @@
 		background-color: black;
 
 		&.droppable {
-			background-color: yellow;
+			background-color: yellow !important;
 		}
 
 		&.hovering {
-			background-color: lime;
+			background-color: lime !important;
 		}
 
 		&.last-move {

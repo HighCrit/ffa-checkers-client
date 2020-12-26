@@ -11,6 +11,7 @@ import PlayerInfo from '../../../components/player_info/PlayerInfo';
 
 class LiveGame extends Game {
     componentDidMount() {
+        socket.init();
         super.componentDidMount();
         this.registerListeners();
     }
@@ -139,7 +140,7 @@ class LiveGame extends Game {
             case GameState.ENDED:
                 return (
                     <div className='page game'>
-                        
+                        {this.state.winner}
                     </div>
                 );
             case GameState.WAITING:

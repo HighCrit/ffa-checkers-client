@@ -67,6 +67,10 @@ class Socket {
             }
         });
 
+        this.on('lobby-closing', (data) => {
+            toast('Lobby Closed - ' + data.reason);
+        });
+
         this.socket.emit('uuid', { id: this.uuid });
     }
 
@@ -80,6 +84,7 @@ class Socket {
         this.socket.off('lobby-player-joined');
         this.socket.off('lobby-player-left');
         this.socket.off('lobby-add-ai-result');
+        this.socket.off('lobby-closing');
     }
 
     clearUuid() {
@@ -122,10 +127,12 @@ class Socket {
     }
 
     joinSession(code) {
+        this.init();
         this.socket.emit('lobby-join-action', { code });
     }
 
     leaveSession() {
+        this.init();
         this.socket.emit('lobby-leave-action');
     }
 }

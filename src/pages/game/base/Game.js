@@ -72,6 +72,7 @@ class Game extends Component {
 
     setCurrentPlayer(currentPlayer) {
         this.setState({ currentPlayer });
+        this.moveSet = [];
     }
 
     constructBoard(fen) {
