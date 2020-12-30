@@ -3,6 +3,7 @@ class Move {
         this.start = start;
         this.end = end;
         this.takes = takes;
+        this.promoting = false;
     }
 }
 

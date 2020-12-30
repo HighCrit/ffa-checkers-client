@@ -1,0 +1,12 @@
+.replay {
+    display: flex;
+	align-items: center;
+	justify-content: center;
+
+	.player-info-container {
+		display: flex;
+		width: 8rem;
+		height: 90%;
+		flex-wrap: wrap;
+	}
+}

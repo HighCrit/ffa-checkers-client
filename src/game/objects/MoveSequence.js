@@ -14,6 +14,10 @@ class MoveSequence {
         this.sequence.push(move);
     }
 
+    undoMove() {
+        this.sequence.pop();
+    }
+
     last() {
         if (this.sequence.length > 0) {
             return this.sequence[this.sequence.length - 1];

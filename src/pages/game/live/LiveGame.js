@@ -42,11 +42,6 @@ class LiveGame extends Game {
             this.executeMove(data.move);
         });
 
-        socket.socket.on('game-piece-promotion', (data) => {
-            this.state.pieces[data].isKing = true;
-            this.setState({ pieces: this.state.pieces });
-        });
-
         /* Lobby Info Events */
 
         socket.socket.on('lobby-player-joined', (data) => {
@@ -72,7 +67,6 @@ class LiveGame extends Game {
         socket.socket.off('game-move-set');
         socket.socket.off('game-move-result');
         socket.socket.off('game-won-by');
-        socket.socket.off('game-piece-promotion');
     }
 
     render() {

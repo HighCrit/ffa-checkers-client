@@ -113,17 +113,7 @@ class Game extends Component {
     }
 
     sendMove(start, end) {
-        if (this.moveSet[0].sequence) { // If it's a movesequence i.e. capturing moves
-            const moveSequenceString = this.moveSequence.sequence.length > 0 ? this.moveSequence.toString() + 'x' + end : start + 'x' + end;
-            const moveSequence = this.moveSet.find(ms => {
-                const msString = moveSequenceToString.apply(ms);
-                return msString.startsWith(moveSequenceString + 'x') || msString === moveSequenceString;
-            });
-            const move = moveSequence.sequence.find(m => m.start === start && m.end === end);
-            socket.socket.emit('game-move-action', move);
-        } else {
-            socket.socket.emit('game-move-action', new Move(start, end));
-        }
+        socket.socket.emit('game-move-action', new Move(start, end));
     }
 
     executeMove(move) {
@@ -138,10 +128,37 @@ class Game extends Component {
             if (move.takes) {
                 pieces[move.takes.position] = null;
             }
+
+            if (move.promoting) {
+                piece.isKing = true;
+            }
             
             this.moveSequence.addMove(move);
     
             this.setState({ pieces, lastMove: move });
+        } else {
+            console.error('Detected de-sync on move:', move);
+        } 
+    }
+
+    undoMove(move) {
+        const pieces = this.state.pieces.slice();
+        const piece = pieces[move.end];
+
+        if (piece) {
+            piece.position = move.start;
+            pieces[move.end] = null;
+            pieces[move.start] = piece;
+
+            if (move.takes) {
+                pieces[move.takes.position] = move.takes;
+            }
+
+            if (move.promoting) {
+                piece.isKing = false;
+            }
+
+            this.setState({ pieces });
         } else {
             console.error('Detected de-sync on move:', move);
         } 
