@@ -11,7 +11,9 @@ import PlayerInfo from '../../../components/player_info/PlayerInfo';
 
 class LiveGame extends Game {
     componentDidMount() {
-        socket.init();
+        if (socket || !socket.connected) {
+            socket.joinSession(this.props.id);
+        }
         super.componentDidMount();
         this.registerListeners();
     }
@@ -134,7 +136,13 @@ class LiveGame extends Game {
             case GameState.ENDED:
                 return (
                     <div className='page game'>
-                        {this.state.winner}
+                        <div className='message'>
+                            <h1 className={this.state.winner}>{this.state.players[this.state.winner]} won the game!</h1>
+                            <div className='options'>
+                                <Button text="Back to Home" onClick={() => this.props.history.push('/')}/>
+                                <Button text="View Replay" onClick={() => location.reload()}/>
+                            </div>
+                        </div>
                     </div>
                 );
             case GameState.WAITING:

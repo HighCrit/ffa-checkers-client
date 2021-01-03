@@ -11,6 +11,37 @@
 		height: 90%;
 		flex-wrap: wrap;
 	}
+
+	.message {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+
+		background-color: $darkShade;
+		border-radius: 5px;
+		padding: 2rem;
+
+		.options {
+			display: flex;
+			flex-direction: row;
+		}
+
+		.YELLOW {
+			color: yellow;
+		}
+		
+		.GREEN {
+			color: limegreen;
+		}
+		
+		.BLUE {
+			color: blue;
+		}
+		
+		.RED {
+			color: red;
+		}
+	}
 }
 
 .lobby {

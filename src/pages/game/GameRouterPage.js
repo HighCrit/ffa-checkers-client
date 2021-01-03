@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import socket from '../../socketApi';
 import LiveGame from './live/LiveGame';
 import ReplayGame from './replay/ReplayGame';
+import './game-router.scss';
+import Button from '../../components/button/Button';
 
 class GameRouterPage extends Component {
     constructor(props) {
@@ -9,39 +10,80 @@ class GameRouterPage extends Component {
 
         this.state = {
             loading: true,
-            replay: false
+            replay: false,
+            error: false,
+            message: ''
         };
     }
 
     componentDidMount() {
         if (this.props.match.params.code) {
             fetch(process.env.REACT_APP_API_URL + '/replays/' + this.props.match.params.code).then((res) => {
-                if (res.status === 200) {
+                if (res.ok) {
                     this.setState({ loading: false, replay: true });
                 } else {
-                    this.setState({ loading: false, replay: false }, () => {
-                        // Setup sockets etc. because this code doesn't go to a replay
-                        if (!this.props.location.state || !this.props.location.state.connected) {
-                            socket.joinSession(this.props.match.params.code);
-                        }
+                    switch (res.status) {
+                        case 404:
+                            this.setState({ loading: false });
+                            break;
+                        case 422:
+                            this.setState({
+                                loading: false,
+                                error: true,
+                                message: 'Malformed Lobby Code'
+                            });
+                            break;
+                        case 502: 
+                            this.setState({
+                                loading: false,
+                                error: true,
+                                message: 'Failed to connect to the server'
+                            });
+                            break;
+                        default:
+                            this.setState({
+                                loading: false,
+                                error: true,
+                                message: 'Failed to load game'
+                            });
+                    }
+                    
+                }
+            }).catch((err) => {
+                console.error(err);
+                if (err.message === 'Failed to fetch') {
+                    this.setState({
+                        loading: false,
+                        error: true,
+                        message: 'Failed to connect to the server'
                     });
                 }
-            }).catch(console.error);
+            });
         }
-        
     }
 
     render() { 
         if (this.state.loading) {
             return (
-                <div className='page'>
-                    Loading game
+                <div className='page router'>
+                    <div className='message'>
+                        Loading Game...
+                    </div>
+                </div>
+            );
+        } else if (this.state.error) {
+            return (
+                <div className='page router'>
+                    <div className='message'>
+                        {this.state.message}
+                        <Button text="Back to Home" onClick={() => this.props.history.push('/')}/>
+                    </div>
                 </div>
             );
         } else if (this.state.replay) {
             return <ReplayGame id={this.props.match.params.code}/>;
         } else {
-            return <LiveGame/>;
+            return <LiveGame id={this.props.match.params.code}/>;
         }
     }
 }
