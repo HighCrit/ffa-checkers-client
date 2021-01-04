@@ -5,6 +5,7 @@ import Board from '../../../components/board/Board';
 import Game from '../base/Game';
 
 import './replay_game.scss';
+import Button from '../../../components/button/Button';
 
 class ReplayGame extends Game {
     constructor(props) {
@@ -20,7 +21,8 @@ class ReplayGame extends Game {
     componentDidMount() {
         this.setState({
             moves: [],
-            currentMove: -1
+            currentMove: -1,
+            currentPlayer: PlayerColor.YELLOW
         });
 
         fetch(process.env.REACT_APP_API_URL + '/replays/' + this.props.id)
@@ -28,6 +30,7 @@ class ReplayGame extends Game {
             .then((data) => {
                 this.constructBoard(data.initialFen);
                 this.setState({
+                    initialFen: data.initialFen,
                     moves: data.moves
                 });
             });
@@ -52,6 +55,9 @@ class ReplayGame extends Game {
         if (this.hasNextMove()) {
             this.executeMove(this.state.moves[this.state.currentMove + 1]);
             this.setState({ currentMove: this.state.currentMove + 1 });
+            if (this.hasNextMove()) {
+                this.setState({ currentPlayer: this.state.pieces[this.state.moves[this.state.currentMove + 1].start].playerColor });
+            }
         }
     }
 
@@ -59,15 +65,18 @@ class ReplayGame extends Game {
         if (this.hasPrevMove()) {
             this.undoMove(this.state.moves[this.state.currentMove]);
             this.setState({ currentMove: this.state.currentMove - 1, lastMove: this.state.moves[this.state.currentMove - 1] });
+            if (this.hasNextMove()) {
+                this.setState({ currentPlayer: this.state.pieces[this.state.moves[this.state.currentMove + 1].start].playerColor });
+            }
         }
     }
 
     hasNextMove() {
-        return this.state.moves.length > 0 && this.state.currentMove < this.state.moves.length - 1;
+        return this.state.moves && this.state.currentMove < this.state.moves.length - 1;
     }
 
     hasPrevMove() {
-        return this.state.moves.length > 0 && this.state.currentMove >= 0;
+        return this.state.moves && this.state.currentMove >= 0;
     }
 
     render() { 
@@ -97,6 +106,13 @@ class ReplayGame extends Game {
                         playerColor={PlayerColor.YELLOW}
                         current={PlayerColor.YELLOW === this.state.currentPlayer}
                     />
+                </div>
+                <div className='replay-controls'>
+                    <h3>Controls</h3>
+                    <div>
+                        <Button disabled={!this.hasPrevMove()} onClick={() => this.prevMove()} text='Previous'/>
+                        <Button disabled={!this.hasNextMove()} onClick={() => this.nextMove()} text='Next'/>
+                    </div>
                 </div>
             </div>
         );

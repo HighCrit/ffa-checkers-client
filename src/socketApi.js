@@ -85,8 +85,7 @@ class Socket {
         this.socket.off('lobby-join-result');
         this.socket.off('lobby-create-result');
         this.socket.off('lobby-reconnect');
-        this.socket.off('lobby-player-joined');
-        this.socket.off('lobby-player-left');
+        this.socket.off('lobby-reconnect');
         this.socket.off('lobby-add-ai-result');
         this.socket.off('lobby-closing');
     }

@@ -46,6 +46,10 @@ class LiveGame extends Game {
 
         /* Lobby Info Events */
 
+        socket.socket.on('lobby-player-disconnect', (data) => {
+            toast(data + ' disconnected');
+        });
+
         socket.socket.on('lobby-player-joined', (data) => {
             this.setPlayers(data.players);
         });
@@ -69,6 +73,9 @@ class LiveGame extends Game {
         socket.socket.off('game-move-set');
         socket.socket.off('game-move-result');
         socket.socket.off('game-won-by');
+        socket.socket.off('lobby-player-disconnect');
+        socket.socket.off('lobby-player-joined');
+        socket.socket.off('lobby-player-left');
     }
 
     render() {

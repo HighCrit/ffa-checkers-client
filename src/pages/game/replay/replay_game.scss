@@ -1,3 +1,5 @@
+@import '../../../colors.scss';
+
 .replay {
     display: flex;
 	align-items: center;
@@ -5,8 +7,21 @@
 
 	.player-info-container {
 		display: flex;
-		width: 8rem;
+		justify-content: center;
+		width: 9rem;
 		height: 90%;
 		flex-wrap: wrap;
+	}
+
+	.replay-controls {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-direction: column;
+		flex-wrap: wrap;
+		background-color: $darkShade;
+		color: $lightShade;
+		border-radius: 5px;
+		padding: .5rem;
 	}
 }

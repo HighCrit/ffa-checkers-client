@@ -1,7 +1,7 @@
 @import '../../colors.scss';
 
 .button-component {
-
+	user-select: none;
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -13,9 +13,14 @@
 	color: $lightShade;
 
 	font-weight: 500;
+
+	&:hover {
+		background: $darkAccent;
+		cursor: pointer;
+	}
 }
 
-.button-component:hover {
-	background: $darkAccent;
-	cursor: pointer;
+.button-component[disabled] {
+	background-color: $darkShade;
+	cursor: not-allowed;
 }

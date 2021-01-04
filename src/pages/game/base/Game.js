@@ -1,6 +1,5 @@
 import { Component } from 'react';
 import Piece from '../../../game/objects/Piece';
-import { MoveSequence, moveSequenceToString } from '../../../game/objects/MoveSequence';
 import GameState from '../../../enums/GameState';
 import socket from '../../../socketApi';
 import Move from '../../../game/objects/Move';
@@ -22,7 +21,6 @@ class Game extends Component {
         };
 
         this.moveSet = [];
-        this.moveSequence = new MoveSequence();
 
         this.sendMove = this.sendMove.bind(this);
         this.canMove = this.canMove.bind(this);
@@ -46,7 +44,6 @@ class Game extends Component {
         });
 
         this.moveSet = [];
-        this.moveSequence = new MoveSequence();
     }
 
     setGameState(gameState) {
@@ -63,7 +60,6 @@ class Game extends Component {
 
     setMoves(moveSet) {
         this.moveSet = moveSet;
-        this.moveSequence = new MoveSequence();
     }
 
     setWinner(winner) {
@@ -93,23 +89,7 @@ class Game extends Component {
     }
 
     canMove(start, end) {
-        if (this.moveSet.length > 0) {
-            if (this.moveSet[0].sequence) { // If it's a movesequence i.e. capturing moves
-                const lastMove = this.moveSequence.last();
-                // Check if we use the same piece to continue the sequence
-                if (lastMove === null || lastMove.end === start) {
-                    const moveSequenceString = this.moveSequence.sequence.length > 0 ? this.moveSequence.toString() + 'x' + end : start + 'x' + end;
-                    return this.moveSet.some(ms => {
-                        const msString = moveSequenceToString.apply(ms);
-                        return msString.startsWith(moveSequenceString + 'x') || msString === moveSequenceString;
-                    });
-                }
-            } else {
-                return this.moveSet.some(m => m.start === start && m.end === end);
-            }
-        }
-
-        return false;
+        return this.moveSet.some(m => m.start === start && m.end === end);
     }
 
     sendMove(start, end) {
@@ -132,8 +112,6 @@ class Game extends Component {
             if (move.promoting) {
                 piece.isKing = true;
             }
-            
-            this.moveSequence.addMove(move);
     
             this.setState({ pieces, lastMove: move });
         } else {

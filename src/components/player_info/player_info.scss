@@ -3,15 +3,12 @@
 	overflow: hidden;
 	height: 4rem;
 	flex-grow: 1;
+	justify-content: center;
 	border-radius: 10px;
 	color: grey;
 	line-height: 4rem;
 	text-overflow: ellipsis;
 	white-space: nowrap;
-
-	h1 {
-		margin-left: 8px; 
-	}
 
 	&.YELLOW {
 		align-self: flex-end;

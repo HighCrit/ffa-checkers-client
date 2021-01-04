@@ -75,6 +75,7 @@ class GameRouterPage extends Component {
             return (
                 <div className='page router'>
                     <div className='message'>
+                        <h3>Error</h3>
                         {this.state.message}
                         <Button text="Back to Home" onClick={() => this.props.history.push('/')}/>
                     </div>
