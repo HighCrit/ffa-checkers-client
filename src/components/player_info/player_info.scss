@@ -21,10 +21,10 @@
 
 	&.BLUE {
 		align-self: flex-end;
-		background-color: blue;
+		background-color: #00D0FF;
 
 		&.negative {
-			color: blue;
+			color: #00D0FF;
 		}
 	}
 
@@ -37,10 +37,10 @@
 	}
 
 	&.RED {
-		background-color: red;
+		background-color: #B71E1E;
 
 		&.negative {
-			color: red;
+			color: #B71E1E;
 		}
 	}
 

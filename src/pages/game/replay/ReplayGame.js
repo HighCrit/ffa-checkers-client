@@ -25,13 +25,13 @@ class ReplayGame extends Game {
             currentPlayer: PlayerColor.YELLOW
         });
 
-        fetch(process.env.REACT_APP_API_URL + '/replays/' + this.props.id)
+        this.constructBoard(this.props.initialFen);
+
+        fetch(this.props.moveUrl)
             .then((res) => res.json())
             .then((data) => {
-                this.constructBoard(data.initialFen);
                 this.setState({
-                    initialFen: data.initialFen,
-                    moves: data.moves
+                    moves: data._embedded.moves
                 });
             });
 

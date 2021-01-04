@@ -11,6 +11,8 @@ class GameRouterPage extends Component {
         this.state = {
             loading: true,
             replay: false,
+            initialFen: '',
+            moveUrl: '',
             error: false,
             message: ''
         };
@@ -20,7 +22,14 @@ class GameRouterPage extends Component {
         if (this.props.match.params.code) {
             fetch(process.env.REACT_APP_API_URL + '/replays/' + this.props.match.params.code).then((res) => {
                 if (res.ok) {
-                    this.setState({ loading: false, replay: true });
+                    res.json().then((json) => {
+                        this.setState({ 
+                            loading: false, 
+                            replay: true,
+                            initialFen: json.initialFen,
+                            moveUrl: json._links.moves.href
+                        });
+                    });
                 } else {
                     switch (res.status) {
                         case 404:
@@ -33,7 +42,8 @@ class GameRouterPage extends Component {
                                 message: 'Malformed Lobby Code'
                             });
                             break;
-                        case 502: 
+                        case 502: // nginx returns this if api docker is down
+                        case 525: // cloudflare returns this if server/nginx is down
                             this.setState({
                                 loading: false,
                                 error: true,
@@ -82,9 +92,9 @@ class GameRouterPage extends Component {
                 </div>
             );
         } else if (this.state.replay) {
-            return <ReplayGame id={this.props.match.params.code}/>;
+            return <ReplayGame initialFen={this.state.initialFen} moveUrl={this.state.moveUrl}/>;
         } else {
-            return <LiveGame id={this.props.match.params.code}/>;
+            return <LiveGame code={this.props.match.params.code}/>;
         }
     }
 }

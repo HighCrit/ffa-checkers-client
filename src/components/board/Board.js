@@ -12,7 +12,24 @@ class Board extends Component {
         this.state = {
             size: '800px'
         };
+
+        this.updateDimensions = this.updateDimensions.bind(this);
     }
+
+    componentDidMount() {
+        this.updateDimensions();
+        window.addEventListener('resize', this.updateDimensions);
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener('resize', this.updateDimensions);
+    }
+
+    updateDimensions() {
+        const size = Math.min(window.innerHeight * .8, window.innerWidth * .8);
+        this.setState({ size: size + 'px' });
+    }
+
 
     render() {
         const cells = [];

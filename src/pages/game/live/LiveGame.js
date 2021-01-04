@@ -12,7 +12,7 @@ import PlayerInfo from '../../../components/player_info/PlayerInfo';
 class LiveGame extends Game {
     componentDidMount() {
         if (socket || !socket.connected) {
-            socket.joinSession(this.props.id);
+            socket.joinSession(this.props.code);
         }
         super.componentDidMount();
         this.registerListeners();
