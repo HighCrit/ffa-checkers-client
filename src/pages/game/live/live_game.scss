@@ -10,6 +10,7 @@
 		width: 9rem;
 		height: 90%;
 		flex-wrap: wrap;
+		justify-content: center;
 	}
 
 	.message {
@@ -35,11 +36,11 @@
 		}
 		
 		.BLUE {
-			color: blue;
+			color: #00D0FF;
 		}
 		
 		.RED {
-			color: red;
+			color: #B71E1E;
 		}
 	}
 }
@@ -91,11 +92,11 @@
 	}
 	
 	.BLUE {
-		color: blue;
+		color:#00D0FF;
 	}
 	
 	.RED {
-		color: red;
+		color: #B71E1E;
 	}
 	
 	.BLACK {
