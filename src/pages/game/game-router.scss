@@ -1,13 +1,13 @@
 @import '../../colors.scss';
 
 .router {
-    align-items: center;
-    justify-content: center;
+	align-items: center;
+	justify-content: center;
 
-    .message {
-        padding: 2rem;
-        background-color: $darkShade;
-        color: $lightShade;
-        border-radius: 5px;
-    }
+	.message {
+		padding: 2rem;
+		background-color: $darkShade;
+		border-radius: 5px;
+		color: $lightShade;
+	}
 }

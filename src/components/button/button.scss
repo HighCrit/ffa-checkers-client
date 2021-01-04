@@ -1,7 +1,6 @@
 @import '../../colors.scss';
 
 .button-component {
-	user-select: none;
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -13,6 +12,7 @@
 	color: $lightShade;
 
 	font-weight: 500;
+	user-select: none;
 
 	&:hover {
 		background: $darkAccent;

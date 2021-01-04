@@ -1,27 +1,27 @@
 @import '../../../colors.scss';
 
 .replay {
-    display: flex;
+	display: flex;
 	align-items: center;
 	justify-content: center;
 
 	.player-info-container {
 		display: flex;
-		justify-content: center;
 		width: 9rem;
 		height: 90%;
 		flex-wrap: wrap;
+		justify-content: center;
 	}
 
 	.replay-controls {
 		display: flex;
-		align-items: center;
-		justify-content: center;
 		flex-direction: column;
 		flex-wrap: wrap;
-		background-color: $darkShade;
-		color: $lightShade;
-		border-radius: 5px;
+		align-items: center;
+		justify-content: center;
 		padding: .5rem;
+		background-color: $darkShade;
+		border-radius: 5px;
+		color: $lightShade;
 	}
 }
