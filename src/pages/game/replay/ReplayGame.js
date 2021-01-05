@@ -20,20 +20,10 @@ class ReplayGame extends Game {
 
     componentDidMount() {
         this.setState({
-            moves: [],
             currentMove: -1,
             currentPlayer: PlayerColor.YELLOW
         });
-
         this.constructBoard(this.props.initialFen);
-
-        fetch(this.props.moveUrl)
-            .then((res) => res.json())
-            .then((data) => {
-                this.setState({
-                    moves: data._embedded.moves
-                });
-            });
 
         document.addEventListener('keydown', this.onKeyDown);
     }
@@ -53,30 +43,30 @@ class ReplayGame extends Game {
 
     nextMove() {
         if (this.hasNextMove()) {
-            this.executeMove(this.state.moves[this.state.currentMove + 1]);
+            this.executeMove(this.props.moves[this.state.currentMove + 1]);
             this.setState({ currentMove: this.state.currentMove + 1 });
             if (this.hasNextMove()) {
-                this.setState({ currentPlayer: this.state.pieces[this.state.moves[this.state.currentMove + 1].start].playerColor });
+                this.setState({ currentPlayer: this.state.pieces[this.props.moves[this.state.currentMove + 1].start].playerColor });
             }
         }
     }
 
     prevMove() {
         if (this.hasPrevMove()) {
-            this.undoMove(this.state.moves[this.state.currentMove]);
-            this.setState({ currentMove: this.state.currentMove - 1, lastMove: this.state.moves[this.state.currentMove - 1] });
+            this.undoMove(this.props.moves[this.state.currentMove]);
+            this.setState({ currentMove: this.state.currentMove - 1, lastMove: this.props.moves[this.state.currentMove - 1] });
             if (this.hasNextMove()) {
-                this.setState({ currentPlayer: this.state.pieces[this.state.moves[this.state.currentMove + 1].start].playerColor });
+                this.setState({ currentPlayer: this.state.pieces[this.props.moves[this.state.currentMove + 1].start].playerColor });
             }
         }
     }
 
     hasNextMove() {
-        return this.state.moves && this.state.currentMove < this.state.moves.length - 1;
+        return this.props.moves && this.state.currentMove < this.props.moves.length - 1;
     }
 
     hasPrevMove() {
-        return this.state.moves && this.state.currentMove >= 0;
+        return this.props.moves && this.state.currentMove >= 0;
     }
 
     render() { 

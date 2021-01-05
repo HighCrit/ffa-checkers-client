@@ -27,7 +27,7 @@ class GameRouterPage extends Component {
                             loading: false, 
                             replay: true,
                             initialFen: json.initialFen,
-                            moveUrl: json._links.moves.href
+                            moves: json.moves
                         });
                     });
                 } else {
@@ -92,7 +92,7 @@ class GameRouterPage extends Component {
                 </div>
             );
         } else if (this.state.replay) {
-            return <ReplayGame initialFen={this.state.initialFen} moveUrl={this.state.moveUrl}/>;
+            return <ReplayGame initialFen={this.state.initialFen} moves={this.state.moves}/>;
         } else {
             return <LiveGame code={this.props.match.params.code}/>;
         }
