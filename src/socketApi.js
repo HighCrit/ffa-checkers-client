@@ -5,7 +5,6 @@ import history from './history';
 class Socket {
     constructor() {
         this.uuid = sessionStorage.getItem('uuid');
-        this.ignoreDisconnect = false;
         this.socket = null;
         this.connected = false;
     }
@@ -96,17 +95,6 @@ class Socket {
     }
 
     /* Socket Funcs */
-
-    reconnect() {
-        const oldUuid = this.uuid;
-        this.clearUuid();
-        this.socket.emit('reset-uuid', oldUuid);
-    }
-
-    disconnect() {
-        this.socket.disconnect();
-    }
-
     on(path, callback) {
         this.socket.on(path, callback);
     }

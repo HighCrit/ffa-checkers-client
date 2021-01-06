@@ -99,7 +99,7 @@ class ReplayGame extends Game {
                 </div>
                 <div className='replay-controls'>
                     <h3>Controls</h3>
-                    <div>
+                    <div className='button-container'>
                         <Button disabled={!this.hasPrevMove()} onClick={() => this.prevMove()} text='Previous'/>
                         <Button disabled={!this.hasNextMove()} onClick={() => this.nextMove()} text='Next'/>
                     </div>

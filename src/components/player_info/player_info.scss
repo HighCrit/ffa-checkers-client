@@ -1,8 +1,11 @@
 .player-info {
 	display: flex;
 	overflow: hidden;
-	height: 4rem;
+	margin: 10px;
+	padding: 5px;
+	height: 5vh;
 	flex-grow: 1;
+	align-items: center;
 	justify-content: center;
 	border-radius: 10px;
 	color: grey;

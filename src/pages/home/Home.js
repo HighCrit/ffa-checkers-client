@@ -4,6 +4,10 @@ import socket from '../../socketApi';
 import './home.scss';
 
 class Home extends Component {
+    componentDidMount() {
+        socket.init();
+    }
+
     render() { 
         return ( 
             <div className='page home'>

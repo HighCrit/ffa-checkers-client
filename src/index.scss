@@ -21,6 +21,7 @@ code {
 
 .page {
 	display: flex;
+	flex-wrap: wrap;
 	height: 1px;
 	// -8vh because of header
 	min-height: calc(100vh - 8vh);

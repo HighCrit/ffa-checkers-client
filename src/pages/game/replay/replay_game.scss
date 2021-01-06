@@ -7,10 +7,16 @@
 
 	.player-info-container {
 		display: flex;
-		width: 9rem;
+		width: 10vw;
+		min-width: 160px;
 		height: 90%;
 		flex-wrap: wrap;
 		justify-content: center;
+
+		@media only screen and (max-width:1110px) {
+			height: auto;
+			width: 90%;
+		}
 	}
 
 	.replay-controls {
@@ -23,5 +29,16 @@
 		background-color: $darkShade;
 		border-radius: 5px;
 		color: $lightShade;
+
+		.button-container {
+			display: flex;
+			flex-direction: column;
+			flex-wrap: wrap;
+			width: 100%;
+		}
+
+		@media only screen and (max-width:1110px) {
+			width: 90%;
+		}
 	}
 }
