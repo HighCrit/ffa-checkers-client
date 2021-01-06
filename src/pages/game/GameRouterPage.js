@@ -43,7 +43,7 @@ class GameRouterPage extends Component {
                             });
                             break;
                         case 502: // nginx returns this if api docker is down
-                        case 525: // cloudflare returns this if server/nginx is down
+                        case 521: // cloudflare returns this if server/nginx is down
                             this.setState({
                                 loading: false,
                                 error: true,

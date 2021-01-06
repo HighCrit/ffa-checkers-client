@@ -15,12 +15,13 @@
 	user-select: none;
 
 	&:hover {
-		background: $darkAccent;
+		background: darken($main, 15%);
 		cursor: pointer;
 	}
 }
 
 .button-component[disabled] {
-	background-color: $darkShade;
+	background-color: lighten($main, 15%);
+	color: $darkAccent;
 	cursor: not-allowed;
 }

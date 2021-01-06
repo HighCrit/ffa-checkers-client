@@ -8,6 +8,7 @@ import socket from '../../../socketApi';
 import './live_game.scss';
 import { toast } from 'react-toastify';
 import PlayerInfo from '../../../components/player_info/PlayerInfo';
+import { withRouter } from 'react-router';
 
 class LiveGame extends Game {
     componentDidMount() {
@@ -19,7 +20,17 @@ class LiveGame extends Game {
     }
 
     componentWillUnmount() {
-        this.unregisterListeners();
+        if (this.state.gameState !== GameState.ENDED) {
+            const r = confirm('Leaving this page will remove you from the lobby!');
+            if (r === true) { // User wants to leave the page
+                socket.leaveSession();
+                this.unregisterListeners();
+            } else {
+                this.props.history.goBack();
+            }
+        } else {
+            this.unregisterListeners();
+        }
     }
 
     registerListeners() {
@@ -83,6 +94,13 @@ class LiveGame extends Game {
             case GameState.PLAYING:
                 return (
                     <div className='page game'>
+                        <div className='player-info-container mobile'>
+                            <PlayerInfo
+                                name={this.state.currentPlayer}
+                                playerColor={this.state.currentPlayer}
+                                current={true}
+                            />
+                        </div>
                         <div className='player-info-container'>
                             {
                                 this.state.players[PlayerColor.GREEN] && 
@@ -178,4 +196,4 @@ class LiveGame extends Game {
     }
 }
  
-export default LiveGame;
+export default withRouter(LiveGame);

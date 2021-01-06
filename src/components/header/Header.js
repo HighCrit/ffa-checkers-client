@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router';
-import socket from '../../socketApi';
+import Button from '../button/Button';
 import './header.scss';
 
 class Header extends Component {
@@ -11,7 +11,6 @@ class Header extends Component {
     }
 
     goToHome() {
-        socket.leaveSession();
         this.props.history.push('/');
     }
 
@@ -21,6 +20,7 @@ class Header extends Component {
                 <div className='logo' onClick={this.goToHome}>
                     <h1>FFA-Checkers</h1>
                 </div>
+                <Button text="Home" onClick={() => this.props.history.push('/')}/>
             </div>
         );
     }

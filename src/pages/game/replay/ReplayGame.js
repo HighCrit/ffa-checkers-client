@@ -72,6 +72,13 @@ class ReplayGame extends Game {
     render() { 
         return (
             <div className='page replay'>
+                <div className='player-info-container mobile'>
+                    <PlayerInfo
+                        name={this.state.currentPlayer}
+                        playerColor={this.state.currentPlayer}
+                        current={true}
+                    />
+                </div>
                 <div className='player-info-container'>
                     <PlayerInfo
                         name={PlayerColor.GREEN}
