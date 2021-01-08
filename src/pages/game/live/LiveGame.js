@@ -20,7 +20,7 @@ class LiveGame extends Game {
     }
 
     componentWillUnmount() {
-        if (this.state.gameState !== GameState.ENDED) {
+        if (this.state.gameState !== GameState.ENDED && this.state.playerColor !== null && socket.inLobby) {
             const r = confirm('Leaving this page will remove you from the lobby!');
             if (r === true) { // User wants to leave the page
                 socket.leaveSession();
@@ -29,6 +29,7 @@ class LiveGame extends Game {
                 this.props.history.goBack();
             }
         } else {
+            socket.leaveSession();
             this.unregisterListeners();
         }
     }
