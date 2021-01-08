@@ -12,7 +12,7 @@ import { withRouter } from 'react-router';
 
 class LiveGame extends Game {
     componentDidMount() {
-        if (socket || !socket.connected) {
+        if (!socket.connected && !socket.inLobby) {
             socket.joinSession(this.props.code);
         }
         super.componentDidMount();

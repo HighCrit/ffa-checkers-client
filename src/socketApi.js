@@ -7,6 +7,7 @@ class Socket {
         this.uuid = sessionStorage.getItem('uuid');
         this.socket = null;
         this.connected = false;
+        this.inLobby = false;
     }
 
     init() {
@@ -22,7 +23,10 @@ class Socket {
     registerServerEvents() {
         this.clearServerEvents();
         this.socket.on('error', console.error);
-        this.socket.on('disconnect', () => this.connected = false);
+        this.socket.on('disconnect', () => {
+            this.connected = false;
+            this.inLobby = false;
+        });
 
         // If the server requests the UUID send it.
         this.socket.on('send-uuid', () => {
@@ -41,6 +45,7 @@ class Socket {
                 return;
             }
             sessionStorage.setItem('lobbyCode', data.code);
+            this.inLobby = true;
             history.push({ pathname: '/game/' + data.code, state: { connected: true } });
         });
 
@@ -50,6 +55,7 @@ class Socket {
                 return;
             }
             sessionStorage.setItem('lobbyCode', data.code);
+            this.inLobby = true;
             history.push({ pathname: '/game/' + data.code, state: { connected: true } });
         });
 
@@ -59,6 +65,7 @@ class Socket {
                 return;
             }
             sessionStorage.setItem('lobbyCode', data.code);
+            this.inLobby = true;
             history.push({ pathname: '/game/' + data.code, state: { connected: true } });
         });
 
@@ -70,6 +77,7 @@ class Socket {
         });
 
         this.on('lobby-closing', (data) => {
+            this.inLobby = false;
             toast('Lobby Closed - ' + data.reason);
         });
 
