@@ -97,7 +97,7 @@ class LiveGame extends Game {
                     <div className='page game'>
                         <div className='player-info-container mobile'>
                             <PlayerInfo
-                                name={this.state.currentPlayer}
+                                name={PlayerColor.GREEN === this.state.playerColor ? 'You' : this.state.players[this.state.currentPlayer]}
                                 playerColor={this.state.currentPlayer}
                                 current={true}
                             />
